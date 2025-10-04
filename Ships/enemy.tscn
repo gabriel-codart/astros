@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://bqyy1t20dq57b"]
+
+[ext_resource type="Texture2D" uid="uid://bvtu02xhe2adk" path="res://Assets/Ships/Enemy.png" id="1_x4iy2"]
+[ext_resource type="Script" path="res://Ships/enemy.gd" id="1_yaixg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oaoas"]
+atlas = ExtResource("1_x4iy2")
+region = Rect2(0, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtgu6"]
+atlas = ExtResource("1_x4iy2")
+region = Rect2(33, 0, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hx0b8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oaoas")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vtgu6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_68cl1"]
+size = Vector2(22, 19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_67l65"]
+size = Vector2(36.5, 310.25)
+
+[node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
+scale = Vector2(4, 4)
+collision_layer = 2
+script = ExtResource("1_yaixg")
+speed = 200.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_hx0b8")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_68cl1")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, 19)
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(0, 165.125)
+shape = SubResource("RectangleShape2D_67l65")
+debug_color = Color(0.999996, 0.420036, 0.596838, 0.419608)
+
+[node name="ShootCooldown" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
