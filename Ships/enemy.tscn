@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bqyy1t20dq57b"]
+[gd_scene load_steps=13 format=3 uid="uid://bqyy1t20dq57b"]
 
 [ext_resource type="Texture2D" uid="uid://bvtu02xhe2adk" path="res://Assets/Ships/Enemy.png" id="1_x4iy2"]
 [ext_resource type="Script" path="res://Ships/enemy.gd" id="1_yaixg"]
@@ -28,12 +28,71 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_68cl1"]
 size = Vector2(22, 19)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_57jfo"]
+size = Vector2(22, 19)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_67l65"]
 size = Vector2(36.5, 310.25)
+
+[sub_resource type="Animation" id="Animation_1ml20"]
+resource_name = "hurt"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4gjq8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mq2mi"]
+resource_name = "dead"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c81rq"]
+_data = {
+"RESET": SubResource("Animation_4gjq8"),
+"dead": SubResource("Animation_mq2mi"),
+"hurt": SubResource("Animation_1ml20")
+}
 
 [node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
 scale = Vector2(4, 4)
 collision_layer = 2
+collision_mask = 21
 script = ExtResource("1_yaixg")
 speed = 200.0
 
@@ -49,6 +108,14 @@ shape = SubResource("RectangleShape2D_68cl1")
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(0, 19)
 
+[node name="Area2D" type="Area2D" parent="." groups=["Enemy"]]
+collision_layer = 2
+collision_mask = 21
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_57jfo")
+
 [node name="AttackArea" type="Area2D" parent="."]
 collision_layer = 0
 
@@ -57,6 +124,13 @@ position = Vector2(0, 165.125)
 shape = SubResource("RectangleShape2D_67l65")
 debug_color = Color(0.999996, 0.420036, 0.596838, 0.419608)
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_c81rq")
+}
+
 [node name="ShootCooldown" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

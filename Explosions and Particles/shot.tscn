@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://ba56ksei8ah8d"]
+
+[ext_resource type="Texture2D" uid="uid://cmdbbakqscrwp" path="res://Assets/Explosions and Particles/Shot.png" id="1_3k57k"]
+
+[sub_resource type="GDScript" id="GDScript_rnccn"]
+script/source = "extends Node2D
+
+var is_prota: bool = true
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+func _ready() -> void:
+	if is_prota:
+		position.y += 15
+		animated_sprite.scale.y = 1
+	else:
+		position.y += 40
+		animated_sprite.scale.y = -1
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	queue_free()
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vlm4k"]
+atlas = ExtResource("1_3k57k")
+region = Rect2(0, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dd7ne"]
+atlas = ExtResource("1_3k57k")
+region = Rect2(33, 0, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_thutg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vlm4k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dd7ne")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Shot" type="Node2D"]
+scale = Vector2(2, 2)
+script = SubResource("GDScript_rnccn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_thutg")
+autoplay = "default"
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

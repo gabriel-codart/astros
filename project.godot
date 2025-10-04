@@ -30,6 +30,8 @@ window/stretch/mode="canvas_items"
 
 Prota=""
 Enemy=""
+Blast=""
+Asteroid=""
 
 [input]
 

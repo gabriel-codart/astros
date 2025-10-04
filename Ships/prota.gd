@@ -1,11 +1,18 @@
 extends CharacterBody2D
 
 @export var speed: float = 300.0
-@onready var blast_scene: PackedScene = preload("res://Explosions and Particles/blast.tscn")
+@export var health: int = 1
 
+@onready var blast_scene: PackedScene = preload("res://Explosions and Particles/blast.tscn")
+@onready var shot_scene: PackedScene = preload("res://Explosions and Particles/shot.tscn")
+@onready var explosion_scene: PackedScene = preload("res://Explosions and Particles/explosion.tscn")
 @onready var marker_left: Marker2D = $MarkerLeft
 @onready var marker_right: Marker2D = $MarkerRight
 @onready var shoot_cooldown: Timer = $ShootCooldown
+@onready var anim: AnimationPlayer = $AnimationPlayer
+
+func _ready() -> void:
+	update_health_ui()
 
 func _physics_process(_delta: float) -> void:
 	# Movimento
@@ -27,11 +34,57 @@ func shoot() -> void:
 		var blast_left = blast_scene.instantiate()
 		blast_left.is_protagonist = true
 		blast_left.position = marker_left.global_position
-		get_parent().add_child(blast_left)
+		get_parent().add_child.call_deferred(blast_left)
+		spawn_shot_fire(marker_left.global_position)
 		# Criar projétil da direita
 		var blast_right = blast_scene.instantiate()
 		blast_right.is_protagonist = true
 		blast_right.position = marker_right.global_position
-		get_parent().add_child(blast_right)
+		get_parent().add_child.call_deferred(blast_right)
+		spawn_shot_fire(marker_right.global_position)
 		# Inicia o Cooldown
 		shoot_cooldown.start()
+
+func spawn_shot_fire(marker_position: Vector2) -> void:
+	var shot_fire = shot_scene.instantiate()
+	shot_fire.is_prota = true
+	shot_fire.position = marker_position
+	get_parent().add_child.call_deferred(shot_fire)
+
+func spawn_explosion() -> void:
+	var explosion = explosion_scene.instantiate()
+	explosion.position = position
+	get_parent().add_child.call_deferred(explosion)
+
+# ==============================
+# VIDA / DANO / MORTE
+# ==============================
+
+func take_damage(amount: int) -> void:
+	print(health)
+	if health <= 0:
+		return
+	health -= amount
+	update_health_ui()
+	
+	if health > 0:
+		anim.play("hurt")
+	else:
+		anim.play("dead")
+		die()
+
+func die() -> void:
+	spawn_explosion()
+
+func update_health_ui() -> void:
+	var hud = get_tree().get_root().get_node("Game/HUD") # ajusta o caminho se necessário
+	if hud and hud.has_method("update_lives"):
+		hud.update_lives(health)
+
+func _on_area_2d_area_entered(area):
+	if area.is_in_group("Blast") or area.is_in_group("Asteroid") or area.is_in_group("Enemy"):
+		take_damage(1)
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "dead":
+		queue_free()

@@ -1,10 +1,15 @@
 extends CharacterBody2D
 
 @export var speed: float = 100.0
+@export var health: int = 1
+
 @onready var marker: Marker2D = $Marker2D
 @onready var attack_area: Area2D = $AttackArea
 @onready var blast_scene: PackedScene = preload("res://Explosions and Particles/blast.tscn")
+@onready var shot_scene: PackedScene = preload("res://Explosions and Particles/shot.tscn")
+@onready var explosion_scene: PackedScene = preload("res://Explosions and Particles/explosion.tscn")
 @onready var shoot_cooldown: Timer = $ShootCooldown
+@onready var anim: AnimationPlayer = $AnimationPlayer
 
 var player_in_range: bool = false
 
@@ -38,15 +43,54 @@ func shoot() -> void:
 		var blast = blast_scene.instantiate()
 		blast.is_protagonist = false
 		blast.position = marker.global_position
-		get_parent().add_child(blast)
+		get_parent().add_child.call_deferred(blast)
+		spawn_shot_fire(marker.global_position)
 		# Inicia o Cooldown
 		shoot_cooldown.start()
 
+func spawn_shot_fire(marker_position: Vector2) -> void:
+	var shot_fire = shot_scene.instantiate()
+	shot_fire.is_prota = false
+	shot_fire.position = marker_position
+	get_parent().add_child.call_deferred(shot_fire)
+
+func spawn_explosion() -> void:
+	var explosion = explosion_scene.instantiate()
+	explosion.position = position
+	get_parent().add_child.call_deferred(explosion)
+
 func _on_attack_area_body_entered(body: Node) -> void:
 	if body.is_in_group("Prota"):
-		print('entrou')
 		player_in_range = true
 
 func _on_attack_area_body_exited(body: Node) -> void:
 	if body.is_in_group("Prota"):
 		player_in_range = false
+
+# ==============================
+# VIDA / DANO / MORTE
+# ==============================
+
+func take_damage(amount: int) -> void:
+	if health <= 0:
+		return
+	health -= amount
+	
+	if health > 0:
+		anim.play("hurt")
+	else:
+		die()
+
+func die() -> void:
+	spawn_explosion()
+	add_points(2)
+	queue_free()
+
+func add_points(points: int):
+	var hud = get_tree().get_root().get_node("Game/HUD")
+	if hud and hud.has_method("add_score"):
+		hud.add_score(points)
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if area.is_in_group("Blast") or area.is_in_group("Asteroid") or area.is_in_group("Prota"):
+		take_damage(1)

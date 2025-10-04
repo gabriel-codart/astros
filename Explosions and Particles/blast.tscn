@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53wdo"]
 size = Vector2(3, 22)
 
-[node name="Blast" type="Node2D"]
+[node name="Blast" type="Node2D" groups=["Blast"]]
 scale = Vector2(2, 2)
 script = ExtResource("1_cd7d7")
 speed = 800.0
@@ -14,11 +14,12 @@ speed = 800.0
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_yji4n")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["Blast"]]
 collision_layer = 16
 collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_53wdo")
 
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

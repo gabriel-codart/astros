@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bt52dwibd0rhd"]
+[gd_scene load_steps=3 format=3 uid="uid://bt52dwibd0rhd"]
 
 [ext_resource type="Theme" uid="uid://1qq33bnlt4dy" path="res://Global/game_theme.tres" id="1_f1fwq"]
+[ext_resource type="Script" path="res://UIs/hud.gd" id="2_y1ntb"]
 
 [node name="HUD" type="Control"]
 z_index = 100
@@ -11,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_f1fwq")
+script = ExtResource("2_y1ntb")
 
 [node name="LifeContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -22,7 +24,7 @@ theme_override_constants/margin_top = 100
 [node name="LifeLabel" type="Label" parent="LifeContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
-text = "IIIII"
+text = "❤❤❤"
 
 [node name="PauseContainer" type="MarginContainer" parent="."]
 layout_mode = 1
