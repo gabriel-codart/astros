@@ -32,7 +32,6 @@ func add_score(points: int) -> void:
 	score_label.text = str(score).pad_zeros(4)
 
 func _on_pause_button_pressed():
-	print("clicando no pause")
 	emit_signal("pause")
 
 # Botão Left
