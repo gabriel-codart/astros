@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://d35d5g3lpc85g"]
+[gd_scene load_steps=6 format=3 uid="uid://d35d5g3lpc85g"]
 
 [ext_resource type="PackedScene" uid="uid://bt52dwibd0rhd" path="res://UIs/hud.tscn" id="1_k7iay"]
+[ext_resource type="Script" path="res://Sections/game.gd" id="1_uiegq"]
 [ext_resource type="PackedScene" uid="uid://comee8gow4ds4" path="res://Ships/prota.tscn" id="1_ydaat"]
 [ext_resource type="Script" path="res://Ships/enemy_spawn.gd" id="3_71pac"]
 [ext_resource type="Script" path="res://Asteroids/asteroid_spawn.gd" id="4_x28kx"]
@@ -12,9 +13,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_uiegq")
 
 [node name="HUD" parent="." instance=ExtResource("1_k7iay")]
-layout_mode = 1
 
 [node name="Prota" parent="." instance=ExtResource("1_ydaat")]
 position = Vector2(360, 980)

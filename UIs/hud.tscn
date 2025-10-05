@@ -3,8 +3,10 @@
 [ext_resource type="Theme" uid="uid://1qq33bnlt4dy" path="res://Global/game_theme.tres" id="1_f1fwq"]
 [ext_resource type="Script" path="res://UIs/hud.gd" id="2_y1ntb"]
 
-[node name="HUD" type="Control"]
-z_index = 100
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("2_y1ntb")
+
+[node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,86 +14,86 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_f1fwq")
-script = ExtResource("2_y1ntb")
 
-[node name="LifeContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-offset_right = 101.0
-offset_bottom = 93.0
+[node name="LifeContainer" type="MarginContainer" parent="Control"]
+offset_right = 194.0
+offset_bottom = 149.0
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 100
 
-[node name="LifeLabel" type="Label" parent="LifeContainer"]
+[node name="LifeLabel" type="Label" parent="Control/LifeContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "❤❤❤"
 
-[node name="PauseContainer" type="MarginContainer" parent="."]
+[node name="PauseContainer" type="MarginContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
+offset_left = -41.0
+offset_right = 41.0
+offset_bottom = 165.0
 grow_horizontal = 2
 theme_override_constants/margin_top = 90
 
-[node name="PauseButton" type="Button" parent="PauseContainer"]
+[node name="PauseButton" type="Button" parent="Control/PauseContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = " ❚❚ "
 
-[node name="ScoreContainer" type="MarginContainer" parent="."]
+[node name="ScoreContainer" type="MarginContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -107.0
-offset_bottom = 43.0
+offset_left = -157.0
+offset_bottom = 149.0
 grow_horizontal = 0
 theme_override_constants/margin_top = 100
 theme_override_constants/margin_right = 50
 
-[node name="ScoreLabel" type="Label" parent="ScoreContainer"]
+[node name="ScoreLabel" type="Label" parent="Control/ScoreContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Score"
 
-[node name="ButtonsContainer" type="MarginContainer" parent="."]
+[node name="ButtonsContainer" type="MarginContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -40.0
-offset_right = 20.0
+offset_left = -266.5
+offset_top = -199.0
+offset_right = 266.5
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/margin_bottom = 100
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ButtonsContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/ButtonsContainer"]
 layout_mode = 2
 theme_override_constants/separation = 100
 alignment = 1
 
-[node name="MoveContainer" type="HBoxContainer" parent="ButtonsContainer/HBoxContainer"]
+[node name="MoveContainer" type="HBoxContainer" parent="Control/ButtonsContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="LeftButton" type="Button" parent="ButtonsContainer/HBoxContainer/MoveContainer"]
+[node name="LeftButton" type="Button" parent="Control/ButtonsContainer/HBoxContainer/MoveContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 65
 text = " ◀◀ "
 
-[node name="RightButton" type="Button" parent="ButtonsContainer/HBoxContainer/MoveContainer"]
+[node name="RightButton" type="Button" parent="Control/ButtonsContainer/HBoxContainer/MoveContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 65
 text = " ▶▶ "
 
-[node name="FireButton" type="Button" parent="ButtonsContainer/HBoxContainer"]
+[node name="FireButton" type="Button" parent="Control/ButtonsContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 65
 text = " ✹ "
+
+[connection signal="pressed" from="Control/PauseContainer/PauseButton" to="." method="_on_pause_button_pressed"]

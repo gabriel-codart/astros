@@ -9,12 +9,17 @@ extends Node2D
 @onready var collision: CollisionShape2D = $Area2D/CollisionShape2D
 
 var is_big: bool
+var type_is_defined: bool = false
 var velocity: Vector2
 var rotation_speed: float
 
 func _ready() -> void:
+	# Collision Shape Único
+	collision.shape = collision.shape.duplicate()
+	# Define rotação e tipo
 	rotation_speed = randf_range(-1.0, 1.0)
-	is_big = randf() < 0.4
+	if not type_is_defined:
+		is_big = randf() < 0.4
 	# Define sprite e colisão
 	if is_big:
 		sprite.texture = load("res://Assets/Asteroids/Asteroid Big.png")
@@ -40,7 +45,8 @@ func spawn_small_asteroids() -> void:
 	var num_smalls = randi_range(2, 3)
 	for i in range(num_smalls):
 		var small = asteroid_small_scene.instantiate()
-		small.is_big = false  # força ser pequeno
+		small.is_big = false
+		small.type_is_defined = true
 		small.position = position
 		
 		# movimento diagonal aleatório pra baixo
@@ -60,14 +66,8 @@ func destroy() -> void:
 		spawn_small_asteroids()
 		spawn_explosion(Vector2i(4.0, 4.0))
 	else:
-		add_points(1)
 		spawn_explosion(Vector2i(2.0, 2.0))
 	queue_free()
-
-func add_points(points: int):
-	var hud = get_tree().get_root().get_node("Game/HUD")
-	if hud and hud.has_method("add_score"):
-		hud.add_score(points)
 
 func _on_area_2d_area_entered(_area: Area2D) -> void:
 	destroy()

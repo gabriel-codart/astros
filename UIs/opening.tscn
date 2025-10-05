@@ -1,7 +1,14 @@
 [gd_scene load_steps=6 format=3 uid="uid://c06t2nly7017u"]
 
-[ext_resource type="Theme" uid="uid://1qq33bnlt4dy" path="res://Global/game_theme.tres" id="1_qymtk"]
 [ext_resource type="Texture2D" uid="uid://c0wwt3rjfrljm" path="res://Assets/Credits/CronikaLogo.png" id="2_uni7j"]
+
+[sub_resource type="GDScript" id="GDScript_hojyb"]
+script/source = "extends Control
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == \"default\":
+		get_tree().change_scene_to_file(\"res://UIs/main_menu.tscn\")
+"
 
 [sub_resource type="Animation" id="Animation_d4ovl"]
 length = 0.001
@@ -42,14 +49,13 @@ _data = {
 }
 
 [node name="Opening" type="Control"]
-z_index = 100
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_qymtk")
+script = SubResource("GDScript_hojyb")
 
 [node name="LogoContainer" type="BoxContainer" parent="."]
 layout_mode = 1
@@ -70,3 +76,5 @@ libraries = {
 "": SubResource("AnimationLibrary_s5cb1")
 }
 autoplay = "default"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -1,0 +1,111 @@
+[gd_scene load_steps=6 format=3 uid="uid://ju4jmuff3d0l"]
+
+[ext_resource type="Theme" uid="uid://1qq33bnlt4dy" path="res://Global/game_theme.tres" id="1_5b5cq"]
+
+[sub_resource type="GDScript" id="GDScript_2g22x"]
+script/source = "extends Control
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == \"default\":
+		get_tree().change_scene_to_file(\"res://UIs/main_menu.tscn\")
+"
+
+[sub_resource type="Animation" id="Animation_u67ad"]
+resource_name = "default"
+length = 15.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(104, 1341.5), Vector2(104, -1058.5)]
+}
+
+[sub_resource type="Animation" id="Animation_3kwll"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(104, 1341.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xor0k"]
+_data = {
+"RESET": SubResource("Animation_3kwll"),
+"default": SubResource("Animation_u67ad")
+}
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_5b5cq")
+script = SubResource("GDScript_2g22x")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = 701.5
+offset_right = 256.0
+offset_bottom = 1698.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="CreditsText" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/line_spacing = 40
+theme_override_font_sizes/font_size = 40
+text = "Direção Eu
+Idealização Eutambém
+Código YoMismo
+Roteiro NãoTemkk
+Artes MeToo
+SFX EuComJsfxr
+Produção AdvinhaKkkkk
+ "
+horizontal_alignment = 3
+
+[node name="Congrats" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+text = "Um projeto
+Cronika Artes
+
+"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 86
+text = "ASTROS"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xor0k")
+}
+autoplay = "default"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

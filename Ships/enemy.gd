@@ -83,14 +83,7 @@ func take_damage(amount: int) -> void:
 
 func die() -> void:
 	spawn_explosion()
-	add_points(2)
 	queue_free()
 
-func add_points(points: int):
-	var hud = get_tree().get_root().get_node("Game/HUD")
-	if hud and hud.has_method("add_score"):
-		hud.add_score(points)
-
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	if area.is_in_group("Blast") or area.is_in_group("Asteroid") or area.is_in_group("Prota"):
-		take_damage(1)
+func _on_area_2d_area_entered(_area: Area2D) -> void:
+	take_damage(1)
