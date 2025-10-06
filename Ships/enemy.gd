@@ -45,6 +45,7 @@ func shoot() -> void:
 		blast.position = marker.global_position
 		get_parent().add_child.call_deferred(blast)
 		spawn_shot_fire(marker.global_position)
+		SFXPlayer.laser()
 		# Inicia o Cooldown
 		shoot_cooldown.start()
 
@@ -77,8 +78,10 @@ func take_damage(amount: int) -> void:
 	health -= amount
 	
 	if health > 0:
+		SFXPlayer.explosion_small()
 		anim.play("hurt")
 	else:
+		SFXPlayer.explosion_big()
 		die()
 
 func die() -> void:

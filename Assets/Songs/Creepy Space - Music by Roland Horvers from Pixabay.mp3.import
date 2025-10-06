@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cg1h6fr62p48k"
+path="res://.godot/imported/Creepy Space - Music by Roland Horvers from Pixabay.mp3-ecbf2921fff0e957679aeea42e5be053.mp3str"
+
+[deps]
+
+source_file="res://Assets/Songs/Creepy Space - Music by Roland Horvers from Pixabay.mp3"
+dest_files=["res://.godot/imported/Creepy Space - Music by Roland Horvers from Pixabay.mp3-ecbf2921fff0e957679aeea42e5be053.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

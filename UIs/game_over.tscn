@@ -10,15 +10,20 @@ signal fade_out
 @onready var anim: AnimationPlayer = $AnimationPlayer
 var scene_path: StringName = \"res://UIs/main_menu.tscn\"
 
+func _ready() -> void:
+	SongPlayer.play(SongPlayer.game_over_theme)
+
 func set_scene_path(path_value: StringName) -> void:
 	anim.play(\"close\")
 	scene_path = path_value
 
 func _on_restart_button_pressed():
+	SFXPlayer.click()
 	BackgroundInstantiate.reset_background()
 	set_scene_path(\"restart\")
 
 func _on_menu_button_pressed():
+	SFXPlayer.click()
 	set_scene_path(\"res://UIs/main_menu.tscn\")
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
@@ -33,34 +38,6 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			await get_tree().create_timer(1.0).timeout
 			get_tree().change_scene_to_file(scene_path)
 "
-
-[sub_resource type="Animation" id="Animation_teedr"]
-resource_name = "default"
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Control:mouse_filter")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.9, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [2, 0]
-}
 
 [sub_resource type="Animation" id="Animation_3t2hw"]
 length = 0.001
@@ -115,6 +92,34 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 2]
+}
+
+[sub_resource type="Animation" id="Animation_teedr"]
+resource_name = "default"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control:mouse_filter")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.9, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_h6w04"]

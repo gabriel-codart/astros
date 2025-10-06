@@ -63,9 +63,11 @@ func spawn_explosion(size: Vector2i) -> void:
 
 func destroy() -> void:
 	if is_big:
+		SFXPlayer.explosion_big()
 		spawn_small_asteroids()
 		spawn_explosion(Vector2i(4.0, 4.0))
 	else:
+		SFXPlayer.explosion_small()
 		spawn_explosion(Vector2i(2.0, 2.0))
 	queue_free()
 

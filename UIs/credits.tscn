@@ -39,7 +39,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 15),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(104, 1341.5), Vector2(104, -1058.5)]
+"values": [Vector2(104, 1341.5), Vector2(104, -1850)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xor0k"]
@@ -68,7 +68,7 @@ anchor_bottom = 0.5
 offset_left = -256.0
 offset_top = 701.5
 offset_right = 256.0
-offset_bottom = 1698.5
+offset_bottom = 2462.5
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -87,6 +87,26 @@ Produção AdvinhaKkkkk
  "
 horizontal_alignment = 3
 
+[node name="MusicCredits" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "\"Creepy Space\"
+de Roland Horvers
+
+\"Dark Cinematic
+Space Pads Loop\"
+de ido berg
+
+\"Workout
+Cyberpunk Music\"
+de Tunetank
+
+Fonte das Músicas
+Pixabay
+
+"
+horizontal_alignment = 1
+
 [node name="Congrats" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 56
@@ -96,10 +116,16 @@ Cronika Artes
 "
 horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Title" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 86
 text = "ASTROS"
+horizontal_alignment = 1
+
+[node name="Version" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Versão Alpha"
 horizontal_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 BackgroundInstantiate="*res://Global/background_instantiate.gd"
+SongPlayer="*res://Global/song_player.tscn"
+SFXPlayer="*res://Global/sfx_player.tscn"
 
 [display]
 

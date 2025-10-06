@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://7xnxdpnsrt86"
+path="res://.godot/imported/Dark Cinematic Space Pads Loop - Music by ido berg from Pixabay.mp3-be4469f4abb32905ca37e5f62cc2d297.mp3str"
+
+[deps]
+
+source_file="res://Assets/Songs/Dark Cinematic Space Pads Loop - Music by ido berg from Pixabay.mp3"
+dest_files=["res://.godot/imported/Dark Cinematic Space Pads Loop - Music by ido berg from Pixabay.mp3-be4469f4abb32905ca37e5f62cc2d297.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

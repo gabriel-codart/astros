@@ -8,6 +8,7 @@ extends Control
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
+	SongPlayer.play(SongPlayer.gameplay_theme)
 	prota.died.connect(_on_prota_died)
 	HUD.pause.connect(_on_pause_pressed)
 
