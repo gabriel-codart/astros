@@ -37,11 +37,11 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		if scene_path == \"continue\":
 			queue_free()
 		elif scene_path == \"restart\":
-			emit_signal(\"fade_out\")
+			fade_out.emit()
 			await get_tree().create_timer(1.0).timeout
 			get_tree().reload_current_scene()
 		else:
-			emit_signal(\"fade_out\")
+			fade_out.emit()
 			await get_tree().create_timer(1.0).timeout
 			get_tree().change_scene_to_file(scene_path)
 		

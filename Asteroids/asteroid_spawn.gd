@@ -2,6 +2,7 @@ extends Node2D
 
 @export var asteroid_scene: PackedScene = preload("res://Asteroids/asteroid.tscn")
 @export var spawn_interval: float = 3.0   # tempo entre spawns
+@export var multiplicator: float = 1.0   # multiplicador
 @export var min_speed: float = 80.0
 @export var max_speed: float = 200.0
 @export var spawn_range_x: Vector2 = Vector2(0, 720)  # limites horizontais do spawn
@@ -28,7 +29,7 @@ func spawn_asteroid() -> void:
 		-200
 	)
 	# Velocidade e rotação
-	var speed = randf_range(min_speed, max_speed)
+	var speed = randf_range(min_speed, max_speed) * multiplicator
 	var rot_speed = randf_range(rotation_speed_range.x, rotation_speed_range.y)
 	asteroid.set_meta("speed", speed)
 	asteroid.set_meta("rot_speed", rot_speed)

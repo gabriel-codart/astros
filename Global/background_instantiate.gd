@@ -15,3 +15,9 @@ func spawn_background():
 
 func reset_background():
 	spawn_background()
+
+func increase_stars_speed() -> void:
+	current_bg.stars.speed_scale += 0.25
+
+func reset_stars_speed() -> void:
+	current_bg.stars.speed_scale = 1.0

@@ -13,7 +13,12 @@ var textures: Array[Texture2D] = []
 # Timer para spawn
 var spawn_timer: Timer
 
+# Partículas de Estrelas
+@onready var stars: GPUParticles2D = $Stars
+
 func _ready():
+	# Velocidade inicial das Estrelas
+	stars.speed_scale = 1.0
 	# Carregar todas as imagens da pasta
 	textures = [
 		load("res://Assets/Background/Planet1.png"),

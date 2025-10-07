@@ -11,6 +11,7 @@ signal fade_out
 var scene_path: StringName = \"res://UIs/main_menu.tscn\"
 
 func _ready() -> void:
+	BackgroundInstantiate.reset_stars_speed()
 	SongPlayer.play(SongPlayer.game_over_theme)
 
 func set_scene_path(path_value: StringName) -> void:
@@ -29,12 +30,11 @@ func _on_menu_button_pressed():
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == \"close\":
 		if scene_path == \"restart\":
-			print(\"reinicia\")
-			emit_signal(\"fade_out\")
+			fade_out.emit()
 			await get_tree().create_timer(1.0).timeout
 			get_tree().reload_current_scene()
 		else:
-			emit_signal(\"fade_out\")
+			fade_out.emit()
 			await get_tree().create_timer(1.0).timeout
 			get_tree().change_scene_to_file(scene_path)
 "

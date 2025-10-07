@@ -3,7 +3,7 @@ extends CharacterBody2D
 signal died
 
 @export var speed: float = 300.0
-@export var health: int = 1
+@export var health: int = 3
 
 @onready var blast_scene: PackedScene = preload("res://Explosions and Particles/blast.tscn")
 @onready var shot_scene: PackedScene = preload("res://Explosions and Particles/shot.tscn")
@@ -75,12 +75,10 @@ func spawn_explosion() -> void:
 # ==============================
 
 func take_damage(amount: int) -> void:
-	print(health)
 	if health <= 0:
 		return
 	health -= amount
 	update_health_ui()
-	
 	if health > 0:
 		SFXPlayer.explosion_small()
 		anim.play("hurt")
@@ -108,5 +106,5 @@ func _on_area_2d_area_entered(area):
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "dead":
-		emit_signal("died")
+		died.emit()
 		queue_free()

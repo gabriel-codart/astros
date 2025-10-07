@@ -1,6 +1,8 @@
 extends CanvasLayer
 
 signal pause
+signal increase_enemies(spawn_interval: float, multiplicator: float)
+signal increase_asteroids(spawn_interval: float, multiplicator: float)
 
 @onready var life_label: Label = $Control/LifeContainer/LifeLabel
 @onready var score_label: Label = $Control/ScoreContainer/ScoreLabel
@@ -30,10 +32,47 @@ func update_lives(value: int) -> void:
 func add_score(points: int) -> void:
 	score += points
 	score_label.text = str(score).pad_zeros(4)
+	# Verifica se pode aumentar as dificuldades
+	check_enemies_difficulty()
+	check_asteroids_difficulty()
+
+func check_enemies_difficulty() -> void:
+	if score == 5:
+		increase_enemies.emit(4.0, 1.25)
+	elif score == 10:
+		increase_enemies.emit(2.0, 1.5)
+	elif score == 15:
+		increase_enemies.emit(1.0, 1.75)
+	elif score == 20:
+		increase_enemies.emit(0.5, 2.0)
+	elif score == 25:
+		increase_enemies.emit(0.25, 2.25)
+	elif score == 30:
+		increase_enemies.emit(0.125, 2.5)
+
+func check_asteroids_difficulty() -> void:
+	if score == 10:
+		increase_asteroids.emit(2.0, 1.25)
+		BackgroundInstantiate.increase_stars_speed()
+	elif score == 20:
+		increase_asteroids.emit(1.0, 1.5)
+		BackgroundInstantiate.increase_stars_speed()
+	elif score == 30:
+		increase_asteroids.emit(0.5, 1.75)
+		BackgroundInstantiate.increase_stars_speed()
+	elif score == 40:
+		increase_asteroids.emit(0.25, 2.0)
+		BackgroundInstantiate.increase_stars_speed()
+	elif score == 50:
+		increase_asteroids.emit(0.125, 2.25)
+		BackgroundInstantiate.increase_stars_speed()
+	elif score == 50:
+		increase_asteroids.emit(0.1, 2.25)
+		BackgroundInstantiate.increase_stars_speed()
 
 func _on_pause_button_pressed():
 	SFXPlayer.click()
-	emit_signal("pause")
+	pause.emit()
 
 # Botão Left
 func _on_left_pressed():
